@@ -1,0 +1,48 @@
+{% load static tailwind_cli %}
+<!DOCTYPE html>
+<html lang="es" data-theme={{DAISY_THEME}}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>{% block title %}Mi Sitio Web{% endblock %}</title>
+
+    <link rel="icon" type="image/x-icon" href="{% static 'theme/favicon.ico' %}">
+
+    <meta name="description" content="{% block meta_description %}Aplicación web moderna desarrollada con Django y Tailwind.{% endblock %}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}Mi Sitio Web{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Aplicación web moderna desarrollada con Django y Tailwind.{% endblock %}">
+    
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'theme/img/default-share.jpg' %}{% endblock %}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Mi Sitio Web{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Aplicación web moderna desarrollada con Django y Tailwind.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'theme/img/default-share.jpg' %}{% endblock %}">
+    <script defer src="{% static 'theme/htmx.js' %}"></script>
+    <script defer src="{% static 'theme/alpine.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'theme/output.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-base-200 text-base-content min-h-screen flex flex-col antialiased">
+
+    <header id="site-header" role="banner" class="w-full sticky top-0 z-50">
+        {% include "componentes/_navbar.html" %}
+    </header>
+
+    <main id="main-content" role="main" class="mx-auto w-full">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include "componentes/_footer.html" %}
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

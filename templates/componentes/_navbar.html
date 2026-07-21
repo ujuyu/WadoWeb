@@ -1,0 +1,46 @@
+<!-- Componente Navbar de DaisyUI -->
+<div class="navbar bg-base-200/80 shadow-sm px-4 sm:px-6 lg:px-8">
+  
+  <!-- Inicio: Logo y menú móvil -->
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+      </div>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 font-medium text-base-content/80">
+        <li><a class="active">Inicio</a></li>
+        <li><a href="">Galerías</a></li>
+        <li><a>Jugando con Orgullo</a></li>
+        <li><a>Proyectos</a></li>
+        <li><a>Cultura</a></li>
+      </ul>
+    </div>
+    <!-- Logo que se pone en una o dos líneas según el tamaño de la pantalla -->
+    <a href="/" class="inline xl:hidden btn btn-ghost h-auto py-2 leading-tight text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-rainbow">
+      WADO<br>
+      LGTBI+
+    </a>
+    <a href="/" class="hidden xl:inline btn btn-ghost h-auto py-2 leading-tight text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-rainbow">
+      WADO LGTBI+
+    </a>
+  </div>
+
+  <!-- Centro: Navegación de escritorio -->
+  <div class="navbar-center hidden lg:flex align-middle">
+    <ul class="menu menu-horizontal px-1 font-medium text-base-content/80">
+      <li><a class="active my-auto text-center text-xl">Inicio</a></li>
+      <li><a class="my-auto text-center text-xl" href="">Galerías</a></li>
+      <li><a class="my-auto text-center text-xl">Jugando con Orgullo</a></li>
+      <li><a class="my-auto text-center text-xl">Proyectos</a></li>
+      <li><a class="my-auto text-center text-xl">Cultura</a></li>
+    </ul>
+  </div>
+
+  <!-- Fin: Botón de Login -->
+  <div class="navbar-end">
+    <a href="{% url 'admin:index' %}" class="btn btn-primary btn-sm md:btn-md gap-2 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
+      <span class="hidden sm:inline">Login</span>
+    </a>
+  </div>
+</div>

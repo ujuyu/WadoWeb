@@ -1,0 +1,29 @@
+# Entornos
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Configuración sensible
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Tailwind CLI binario
+.tailwind-cli/
+
+# Resultado de collectstatic
+staticfiles/
+
+# Cachés
+.pytest_cache/
+.mypy_cache/
+
+# Otros
+Notas/
+WadoWeb.code-workspace

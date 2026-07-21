@@ -1,0 +1,31 @@
+/* theme/static/theme/input.css */
+
+@import "tailwindcss";
+
+@source not "./tailwindcss";
+
+@source not "./daisyui{,*}.mjs";
+
+@plugin "./daisyui.mjs";
+
+/* Optional for custom themes – Docs: https://daisyui.com/docs/themes/#how-to-add-a-new-custom-theme */
+
+@plugin "./daisyui-theme.mjs"{
+
+  /* custom theme here */
+
+}
+@theme {
+      --background-image-gradient-rainbow: linear-gradient(
+        to right, 
+        #ef4444, #f97316, #facc15, #22c55e, #3b82f6, #9333ea
+      );
+      --spacing-8xl: 88rem; /*1408px*/
+      --spacing-9xl: 96rem; 
+}
+/* Declaración de utilidades personalizadas de ajuste fino (mantener al mínimo) */
+@layer utilities {
+    .min-h-screen-custom {
+    min-height: calc(100vh - 4rem);
+    }
+}
