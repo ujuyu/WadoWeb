@@ -3,7 +3,6 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.wadolgtbi.org', 'wadolgtbi.org', 'ujuyu.pythonanywhere.com']
 
 # Base de datos sqlite3 con parámetros optimizados para producción
 DATABASES = {
@@ -31,5 +30,3 @@ CSRF_COOKIE_SECURE = True
 # Claves de Stripe en modo real (Live keys)
 STRIPE_PUBLIC_KEY = 'pk_live_...'
 STRIPE_SECRET_KEY = 'sk_live_...'
-
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')

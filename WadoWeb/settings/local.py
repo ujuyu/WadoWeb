@@ -1,10 +1,6 @@
 from .base import *
 from .base import BASE_DIR
 
-# Activar modo depuración para ver errores en pantalla
-DEBUG = True
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Base de datos SQLite local para desarrollo rápido
 DATABASES = {
