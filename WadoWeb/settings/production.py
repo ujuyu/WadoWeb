@@ -30,3 +30,6 @@ CSRF_COOKIE_SECURE = True
 # Claves de Stripe en modo real (Live keys)
 STRIPE_PUBLIC_KEY = 'pk_live_...'
 STRIPE_SECRET_KEY = 'sk_live_...'
+
+# 2. Ruta física en el disco duro donde `collectstatic` reunirá todo
+STATIC_ROOT = BASE_DIR / 'staticfiles'

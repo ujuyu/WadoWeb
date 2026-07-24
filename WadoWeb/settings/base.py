@@ -159,7 +159,7 @@ STATIC_URL = "static/"
 # 3. LA CLAVE: Dile a Django dónde buscar archivos estáticos globales
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Esto le dice a Django que busque archivos estáticos en la carpeta "static" en la raíz del proyecto
-    BASE_DIR / "theme" / "static"  # Para los archivos de tailwind y daisyUI
+    # BASE_DIR / "theme" / "static"  No hace falta pues Django ya lee todos los apps/static de todas las aplicaciones creadas
 ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" # Tipo de campo por defecto para las claves primarias en los modelos de Django
@@ -167,7 +167,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" # Tipo de campo por defecto
 # (Opcional pero recomendado) Ruta donde se descargará el CLI de Tailwind. 
 # Por defecto se guarda en ~/.local/bin/, pero al ser WinPython portable, 
 # puedes forzar que se quede dentro del proyecto:
-import os
 
 # 1. Apunta directamente al archivo ejecutable, no solo al directorio
 TAILWIND_CLI_PATH = BASE_DIR / '.tailwind-cli' / 'tailwindcss-windows-x64-4.3.1.exe'
