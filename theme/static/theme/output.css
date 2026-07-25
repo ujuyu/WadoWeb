@@ -3280,6 +3280,11 @@
       border-block-width: 0px;
     }
   }
+  .md\:p-0 {
+    @media (width >= 48rem) {
+      padding: 0;
+    }
+  }
   .md\:p-8 {
     @media (width >= 48rem) {
       padding: calc(var(--spacing) * 8);
@@ -3351,6 +3356,11 @@
       width: calc(2 / 3 * 100%);
     }
   }
+  .lg\:p-20 {
+    @media (width >= 64rem) {
+      padding: calc(var(--spacing) * 20);
+    }
+  }
   .lg\:p-24 {
     @media (width >= 64rem) {
       padding: calc(var(--spacing) * 24);
@@ -3387,6 +3397,11 @@
   .xl\:inline {
     @media (width >= 80rem) {
       display: inline;
+    }
+  }
+  .xl\:p-24 {
+    @media (width >= 80rem) {
+      padding: calc(var(--spacing) * 24);
     }
   }
 }
