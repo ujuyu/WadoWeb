@@ -1,0 +1,22 @@
+<div class="hidden xl:flex justify-center items-stretch pointer-events-none select-none" aria-hidden="true">
+    <!-- Se cambia w-20 (80px) por w-28 (112px) para dar cabida al nuevo ancho -->
+    <svg class="h-full w-28 opacity-85" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <!-- pattern width ampliado de 80 a 112 -->
+            <pattern id="{{stroke_1}}y{{stroke_2}}y{{stroke_3}}" width="112" height="160" patternUnits="userSpaceOnUse">
+                <!-- Onda 1: Rojo (Base X = 28) -->
+                <path d="M 28 0 C 8 20, 8 60, 28 80 C 48 100, 48 140, 28 160" 
+                      fill="none" class="{{stroke_1}}" stroke-width="10" stroke-linecap="round" />
+                
+                <!-- Onda 2: Amarillo (Base X = 52) -->
+                <path d="M 52 0 C 32 20, 32 60, 52 80 C 72 100, 72 140, 52 160" 
+                      fill="none" class="{{stroke_2}}" stroke-width="10" stroke-linecap="round" />
+                
+                <!-- Onda 3: Celeste (Base X = 76) -->
+                <path d="M 76 0 C 56 20, 56 60, 76 80 C 96 100, 96 140, 76 160" 
+                      fill="none" class="{{stroke_3}}" stroke-width="10" stroke-linecap="round" />
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#{{stroke_1}}y{{stroke_2}}y{{stroke_3}})" />
+    </svg>
+</div>
