@@ -12,6 +12,7 @@ class SiteConfiguration(models.Model): # Las bases de datos solo viven en las Ap
         ('corporate', 'Corporate'),
         ('synthwave', 'Synthwave'),
         ('aqua', 'Aqua'),
+        ('pastel', 'Pastel'),
     ]
     
     theme = models.CharField(
