@@ -6,11 +6,12 @@
         {% include 'core/componentes/_carrousel.html'%}
     </section>
 
-    <section class="my-8 relative w-full overflow-hidden">
+    <section class="relative w-full overflow-hidden">
+        <div class="h-2 w-full bg-gradient-rainbow"></div>
         <div class="w-full grid grid-cols-1 xl:grid-cols-[1fr_minmax(0,80rem)_1fr] items-stretch">
             {% include 'core/componentes/_tiras_descendentes.html' with stroke_1="stroke-red-500" stroke_2="stroke-orange-500" stroke_3="stroke-yellow-400"%}
             <div id="noticias-container" 
-                class=" flex flex-col gap-4 w-full items-center"
+                class="my-8 flex flex-col gap-4 w-full items-center"
                 hx-get="{% url 'noticias:htmx_ultimas_noticias' %}"
                 hx-trigger="revealed"
                 hx-swap="innerHTML">
