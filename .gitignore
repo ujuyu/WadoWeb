@@ -28,3 +28,6 @@ staticfiles/
 # Otros
 Notas/
 WadoWeb.code-workspace
+
+# BD
+db.sqlite3
