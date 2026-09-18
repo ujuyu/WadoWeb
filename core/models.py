@@ -11,6 +11,7 @@ class SiteConfiguration(models.Model): # Las bases de datos solo viven en las Ap
         ('bumblebee', 'Bumblebee'),
         ('corporate', 'Corporate'),
         ('synthwave', 'Synthwave'),
+        ('aqua', 'Aqua'),
     ]
     
     theme = models.CharField(
