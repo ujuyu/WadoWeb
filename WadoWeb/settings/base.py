@@ -98,6 +98,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages", # Context processor para mensajes de Django
                 "core.context_processors.site_theme", # Nuestro context processor personalizado para el tema del sitio
+                "core.context_processors.bandas_laterales",
             ],
         },
     },

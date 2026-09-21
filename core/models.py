@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from django.core.cache import cache
 
 class SiteConfiguration(models.Model): # Las bases de datos solo viven en las Apps, no en el proyecto
-    # Añade aquí los temas de DaisyUI que quieras permitir
     THEME_CHOICES = [
         ('light', 'Light'),
         ('dark', 'Dark'),
@@ -22,6 +21,13 @@ class SiteConfiguration(models.Model): # Las bases de datos solo viven en las Ap
         verbose_name="Tema visual" # Nombre legible para el campo en el admin de Django
     )
 
+    bandasLaterales = models.CharField(
+        max_length=15,
+        choices=[('onduladas', 'Onduladas'), ('rectas', 'Rectas'), ('no', 'No')],
+        default='rectas',
+        verbose_name='Bandas laterales'
+    )
+
     class Meta:
         verbose_name = "Configuración del Sitio"
         verbose_name_plural = "Configuración del Sitio"
@@ -33,11 +39,13 @@ class SiteConfiguration(models.Model): # Las bases de datos solo viven en las Ap
         super().save(*args, **kwargs) # Llama al método save original para guardar el registro
         # Esto hay que hacerlo para todas las columnas del SiteConfiguracion pues estarán todas cacheadas
         cache.delete('daisy_site_theme')
+        cache.delete('bandas_laterales')
 
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
         # Limpiamos la caché si se elimina el registro por algún motivo.
         cache.delete('daisy_site_theme')
+        cache.delete('bandas_laterales')
 
 
     def __str__(self):

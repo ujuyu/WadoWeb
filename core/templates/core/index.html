@@ -9,7 +9,7 @@
     <section class="relative w-full overflow-hidden">
         <div class="h-2 w-full bg-gradient-rainbow"></div>
         <div class="w-full grid grid-cols-1 xl:grid-cols-[1fr_minmax(0,80rem)_1fr] items-stretch">
-            {% include 'core/componentes/_tiras_descendentes.html' with stroke_1="stroke-red-500" stroke_2="stroke-orange-500" stroke_3="stroke-yellow-400"%}
+            {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-red-500" stroke_2="stroke-orange-500" stroke_3="stroke-yellow-400"%}
             <div id="noticias-container" 
                 class="my-8 flex flex-col gap-4 w-full items-center"
                 hx-get="{% url 'noticias:htmx_ultimas_noticias' %}"
@@ -21,7 +21,7 @@
                     <div class="skeleton h-32 w-full"></div>
                 </div>
             </div>
-            {% include 'core/componentes/_tiras_descendentes.html' with stroke_1="stroke-green-500" stroke_2="stroke-blue-500" stroke_3="stroke-purple-600"%}
+            {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-green-500" stroke_2="stroke-blue-500" stroke_3="stroke-purple-600"%}
         </div>
     </section>
 
