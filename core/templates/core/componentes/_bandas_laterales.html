@@ -2,6 +2,11 @@
 <div class="hidden xl:flex justify-center items-stretch pointer-events-none select-none" aria-hidden="true">
     <svg class="h-full w-28 opacity-85" xmlns="http://www.w3.org/2000/svg">
         <defs>
+            <!-- Filtro de desenfoque nativo -->
+            <filter id="desenfoque-suave" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" />
+            </filter>
+
             <pattern id="banda-{{ BANDAS_LATERALES }}-{{ stroke_1|slugify }}-{{ stroke_2|slugify }}-{{ stroke_3|slugify }}" 
                      width="112" height="160" patternUnits="userSpaceOnUse">
                 {% if BANDAS_LATERALES == "onduladas" %}
@@ -25,7 +30,9 @@
                 {% endif %}
             </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#banda-{{ BANDAS_LATERALES }}-{{ stroke_1|slugify }}-{{ stroke_2|slugify }}-{{ stroke_3|slugify }})" />
+        <rect width="100%" height="100%" 
+              fill="url(#banda-{{ BANDAS_LATERALES }}-{{ stroke_1|slugify }}-{{ stroke_2|slugify }}-{{ stroke_3|slugify }})" 
+              filter="url(#desenfoque-suave)" />
     </svg>
 </div>
 {% else %}
