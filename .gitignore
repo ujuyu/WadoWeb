@@ -30,4 +30,5 @@ Notas/
 WadoWeb.code-workspace
 
 # BD
+*.sqlite3
 db.sqlite3
