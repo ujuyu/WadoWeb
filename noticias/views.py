@@ -7,8 +7,8 @@ class NoticiasView(ListView):
     context_object_name = "noticias"  # Variable limpia para el template
 
     def get_queryset(self):
-        # Buena práctica: Filtrar solo elementos activos y optimizar la consulta
-        return Noticia.objects.filter(publicada=True)
+        consultaBaseVista = super().get_queryset() # para respetar los posibles filtros de la clase padre en lugar de hacer Evento.objects.filter...
+        return consultaBaseVista.filter(publicada=True)
     
 class NoticiaDetailView(DetailView):
     model = Noticia

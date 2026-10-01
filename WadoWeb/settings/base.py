@@ -66,10 +66,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_tailwind_cli",
     "pruebas.apps.PruebasConfig",
     "core.apps.CoreConfig", # La mejor práctica es registrar la clase nombreappConfig de cada app
     "noticias.apps.NoticiasConfig",
-    "django_tailwind_cli",
+    "eventos.apps.EventosConfig",
     "theme.apps.ThemeConfig",
 
 ]

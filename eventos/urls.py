@@ -1,16 +1,16 @@
 from django.urls import path
-from .views import NoticiasView, NoticiaDetailView
+from .views import EventosView, EventoDetailView
 
-app_name = "noticias"
+app_name = "eventos"
 
 # 1. Rutas que se mostrarán en la navegación pública
 NAVEGACION_URLS = [
-    path('noticia/<slug:slug>/', NoticiaDetailView.as_view(), name='noticia_detalle'),
+    path('eventos/<slug:slug>/', EventoDetailView.as_view(), name='evento_detalle'),
 ]
 
 # 2. Rutas exclusivas para peticiones interactivas / HTMX (ocultas del menú)
 HTMX_URLS = [
-    path('htmx/ultimas/', NoticiasView.as_view(), name='htmx_ultimos_noticias'),
+    path('htmx/ultimas/', EventosView.as_view(), name='htmx_ultimos_eventos'),
 ]
 
 
