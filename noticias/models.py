@@ -30,4 +30,3 @@ class Noticia(models.Model):
     def get_absolute_url(self):
         return reverse('noticias:noticia_detalle', kwargs={'slug': self.slug})
 
-# Create your models here.

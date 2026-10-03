@@ -10,7 +10,7 @@ NAVEGACION_URLS = [
 
 # 2. Rutas exclusivas para peticiones interactivas / HTMX (ocultas del menú)
 HTMX_URLS = [
-    path('htmx/ultimas/', NoticiasView.as_view(), name='htmx_ultimos_noticias'),
+    path('htmx/ultimas/', NoticiasView.as_view(), name='htmx_ultimas_noticias'),
 ]
 
 

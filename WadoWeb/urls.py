@@ -39,6 +39,7 @@ UTILITY_URLS = [
 # 4. Registro de las URLS de las apps que van a servir algún contenido aunque no se navege a ellas (imprescindible)
 REGISTRO_URLS = [
     path('noticias/', include('noticias.urls')),
+    path('eventos/', include('eventos.urls')),
 ]
 
 # La variable que Django exige obligatoriamente

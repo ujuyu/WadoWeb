@@ -12,6 +12,7 @@
                     src="{{ noticia.imagen.url }}" 
                     alt="{{ noticia.titulo }}" 
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
+                    loading="lazy"
                 />
             {% else %}
                 <div class="flex items-center justify-center w-full h-56 md:h-full text-base-content/40">
@@ -23,7 +24,7 @@
         <div class="card-body md:w-3/5 lg:w-2/3 p-6 md:p-8">
             <div class="flex items-center gap-3 mb-2">
                 <span class="badge badge-primary badge-soft badge-sm">Actualidad</span>
-                <time class="text-sm text-base-content/60 font-medium" datetime="{{ noticia.fecha_publicacion|date:'Y-m-d' }}">
+                <time class="text-sm text-base-content/60 font-medium" datetime="{{ noticia.fecha_publicacion|date:'Y-m-d\TH:i' }}">
                     {{ noticia.fecha_publicacion|date:"d M Y" }}
                 </time>
             </div>
