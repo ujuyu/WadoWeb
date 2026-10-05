@@ -1,94 +1,186 @@
-<div class="w-full">
+<div class="w-full select-none">
     {% if banners|length > 0 %}
-    <div class="relative mx-auto p-0 md:p-12 lg:p-20 xl:p-24 max-w-9xl">
+    <section 
+        aria-roledescription="carousel" 
+        aria-label="Banners destacados"
+        class="relative mx-auto max-w-9xl p-1 md:p-12 lg:p-20 xl:p-24">
+        
         {% include 'core/componentes/_blobs_background.html' %}
-        <!-- Contenedor Alpine.js  -->
+
+        <!-- Contenedor Alpine.js con soporte de teclado, temporizador y gestos táctiles -->
         <div x-data="{ 
                 active: 0, 
                 count: {{ banners|length }}, 
                 timer: null,
-                next() { this.active = (this.active + 1) % this.count },
-                prev() { this.active = (this.active - 1 + this.count) % this.count },
-                startTimer() { 
-                    clearInterval(this.timer); 
-                    this.timer = setInterval(() => this.next(), 4000);
+                delay: 500000,
+                touchStartX: 0,
+                touchStartY: 0,
+                touchEndX: 0,
+                touchEndY: 0,
+                minSwipeDistance: 50,
+                next() { 
+                    this.active = (this.active + 1) % this.count; 
                 },
-                manualInteraction(action) {
+                prev() { 
+                    this.active = (this.active - 1 + this.count) % this.count; 
+                },
+                goTo(index) {
+                    this.active = index;
+                    this.startTimer();
+                },
+                manual(action) {
                     action === 'next' ? this.next() : this.prev();
+                    this.startTimer();
+                },
+                startTimer() { 
+                    this.stopTimer();
+                    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                        this.timer = setInterval(() => this.next(), this.delay);
+                    }
+                },
+                stopTimer() {
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                        this.timer = null;
+                    }
+                },
+                handleTouchStart(e) {
+                    this.stopTimer();
+                    this.touchStartX = e.changedTouches[0].clientX;
+                    this.touchStartY = e.changedTouches[0].clientY;
+                },
+                handleTouchEnd(e) {
+                    this.touchEndX = e.changedTouches[0].clientX;
+                    this.touchEndY = e.changedTouches[0].clientY;
+                    this.processSwipe();
+                    this.startTimer();
+                },
+                processSwipe() {
+                    const diffX = this.touchStartX - this.touchEndX;
+                    const diffY = this.touchStartY - this.touchEndY;
+
+                    // Verifica que el deslizamiento horizontal supere al vertical y al umbral mínimo
+                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > this.minSwipeDistance) {
+                        if (diffX > 0) {
+                            this.next(); // Deslizamiento izquierda -> siguiente
+                        } else {
+                            this.prev(); // Deslizamiento derecha -> anterior
+                        }
+                    }
                 }
             }" 
             x-init="startTimer()" 
-            @mouseenter="clearInterval(timer)" 
+            @mouseenter="stopTimer()" 
             @mouseleave="startTimer()"
+            @focusin="stopTimer()"
+            @focusout="startTimer()"
+            @touchstart.passive="handleTouchStart($event)"
+            @touchend.passive="handleTouchEnd($event)"
+            @keydown.arrow-left="manual('prev')" 
+            @keydown.arrow-right="manual('next')"
+            tabindex="0"
+            role="region"
+            aria-live="polite"
+            class="group relative mx-auto aspect-video max-w-6xl touch-pan-y 
+            overflow-hidden rounded-box bg-base-300 shadow-xl focus:outline-none 
+            focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
             
-            class="relative max-w-6xl aspect-video overflow-hidden rounded-box shadow-xl bg-base-300 mx-auto">
-            
-            <!-- Contenedor de Diapositivas Apiladas -->
+            <!-- Diapositivas Apiladas -->
             {% for banner in banners %}
-            <div x-show="active === {{ forloop.counter0 }}"
+            <article 
+                x-show="active === {{ forloop.counter0 }}"
                 x-transition:enter="transition-opacity duration-700 ease-in-out"
                 x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100"
                 x-transition:leave="transition-opacity duration-700 ease-in-out"
                 x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0"
-                class="absolute inset-0 w-full h-full"
-                {% if not forloop.first %}style="display: none;"{% endif %}>
+                role="group"
+                aria-roledescription="slide"
+                aria-label="{{ forloop.counter }} de {{ banners|length }}"
+                class="absolute inset-0 size-full"
+                {% if not forloop.first %}style="display: none;"{% endif %}
+                data-theme="{{banner.colorFondo}}">
                 
-                <img src="{{ banner.imagen.url }}" alt="{{ banner.titulo }}" class="w-full h-full object-cover" />
+                <img 
+                    src="{{ banner.imagen.url }}" 
+                    alt="{{ banner.titulo|default:'Banner' }}" 
+                    draggable="false"
+                    class="size-full object-cover pointer-events-none" 
+                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" />
                 
-                <!-- Overlay con gradiente para asegurar contraste del texto -->
-                 <!-- absolute inset-0 bg-gradient-to-t from-base-300/90 via-base-300/40 to-transparent flex flex-col justify-end p-6 md:p-12 -->
                 {% if banner.titulo or banner.descripcion %}
-                <div class="absolute inset-0 bg-linear-to-bl from-transparent to-base-300/90 via-base-300/40 flex flex-col justify-end p-6 md:p-12">
-                {% else %}
-                <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12">
-                {% endif %}
-                    <div class="w-full max-w-[80%] md:max-w-[70%]">
-                        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2 bg-clip-text text-base-content/90 w-fit">
+                <!-- Degradado para mejorar la visibilidad -->
+                <div class="pointer-events-none absolute inset-0 flex flex-col justify-end 
+                bg-linear-to-t from-base-100 via-base-100/60 to-transparent transition-opacity 
+                duration-300
+                p-6 sm:p-8 md:p-12">
+                    <div class="max-w-2xl">
+                        {% if banner.titulo %}
+                        <h2 class="mb-2 text-2xl font-extrabold tracking-tight 
+                                    text-base-content/90 sm:text-3xl md:text-4xl lg:text-5xl">
                             {{ banner.titulo }}
                         </h2>
+                        {% endif %}
                         {% if banner.descripcion %}
-                        <p class="text-base md:text-lg text-base-content/90 max-w-2xl font-medium">
+                        <p class="text-sm font-medium text-base-content/90 sm:text-base md:text-lg">
                             {{ banner.descripcion }}
                         </p>
                         {% endif %}
                     </div>
                 </div>
-            </div>
+                {% endif %}
+            </article>
             {% endfor %}
 
-            <!-- Controles Prev / Next -->
+            <!-- Botones Prev / Next (Ocultos en móvil, visibles en pantallas con puntero/hover) -->
             {% if banners|length > 1 %}
-            <div class="absolute inset-0 flex justify-between items-center px-4 pointer-events-none z-10">
-                <button @click="manualInteraction('prev')" class="btn btn-circle btn-sm md:btn-md btn-ghost bg-base-100/50 hover:bg-base-100 pointer-events-auto backdrop-blur-sm" aria-label="Anterior">
-                    ❮
-                </button>
-                <button @click="manualInteraction('next')" class="btn btn-circle btn-sm md:btn-md btn-ghost bg-base-100/50 hover:bg-base-100 pointer-events-auto backdrop-blur-sm" aria-label="Siguiente">
-                    ❯
-                </button>
-            </div>
-
-            <!-- Indicadores (Puntos inferiores) -->
-            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
-                <template x-for="i in count" :key="i">
-                    <button @click="active = i - 1; startTimer()" 
-                            class="w-3 h-3 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary"
-                            :class="active === i - 1 ? 'bg-primary' : 'bg-base-content/30 hover:bg-base-content/50'"
-                            :aria-label="'Ir al banner ' + i">
+                <div class="pointer-events-none absolute inset-0 z-10 hidden items-center justify-between px-5 md:flex">
+                    <button 
+                        type="button"
+                        @click="manual('prev')" 
+                        class="btn btn-circle btn-md pointer-events-auto border-none bg-base-100/75 text-base-content opacity-0 shadow-md backdrop-blur-md transition-all hover:bg-base-100 group-hover:opacity-100 group-focus-within:opacity-100 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" 
+                        aria-label="Anterior diapositiva">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
                     </button>
-                </template>
-            </div>
-            {% endif %}
-            
-        </div>
-    </div>
-    {% else %}
+                    <button 
+                        type="button"
+                        @click="manual('next')" 
+                        class="btn btn-circle btn-md pointer-events-auto border-none bg-base-100/75 text-base-content opacity-0 shadow-md backdrop-blur-md transition-all hover:bg-base-100 group-hover:opacity-100 group-focus-within:opacity-100 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" 
+                        aria-label="Siguiente diapositiva">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
 
-        <div role="alert" class="alert alert-warning">
-            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <!-- Indicadores Inferiores -->
+                <div class="absolute bottom-4 inset-x-0 z-10 flex justify-center gap-1.5" role="tablist" aria-label="Selector de diapositivas">
+                    <template x-for="i in count" :key="i">
+                        <button 
+                            type="button"
+                            @click="goTo(i - 1)" 
+                            class="group/dot flex size-7 items-center justify-center focus:outline-none"
+                            :aria-label="'Ir a la diapositiva ' + i"
+                            :aria-selected="active === i - 1">
+                            <span 
+                                class="h-2 rounded-full transition-all duration-300 group-focus-visible/dot:ring-2 group-focus-visible/dot:ring-primary group-focus-visible/dot:ring-offset-2"
+                                :class="active === i - 1 ? 'w-6 bg-primary' : 'w-2 bg-base-content/40 hover:bg-base-content/70'">
+                            </span>
+                        </button>
+                    </template>
+                </div>
+            {% endif %}   
+        </div>
+    </section>
+    {% else %}
+        <div role="alert" class="alert alert-warning mx-auto my-4 max-w-7xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
             <span>No se encontró ningún banner disponible.</span>
         </div>
-
     {% endif %}
 </div>

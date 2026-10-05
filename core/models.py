@@ -54,6 +54,12 @@ class SiteConfiguration(models.Model): # Las bases de datos solo viven en las Ap
 class Banner(models.Model):
     titulo = models.CharField(max_length=100, blank=True)
     descripcion = models.TextField(blank=True)
+    colorFondo = models.CharField(
+        max_length=10,
+        choices=[('light', 'Negro'),('dark', 'Blanco')],
+        default='dark',
+        verbose_name='Color texto'
+    )
     imagen = models.ImageField(upload_to="carrouselPortada/%Y/%m/", verbose_name="Imagen del carrousel")
     orden = models.PositiveIntegerField(default=0)
     activo = models.BooleanField(default=True)
