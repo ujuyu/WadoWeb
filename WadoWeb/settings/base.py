@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_tailwind_cli",
+    'django_ckeditor_5', # CKEditor 5
     "pruebas.apps.PruebasConfig",
     "core.apps.CoreConfig", # La mejor práctica es registrar la clase nombreappConfig de cada app
     "noticias.apps.NoticiasConfig",
@@ -191,3 +192,67 @@ MEDIA_URL = '/media/'
 
 # Ruta absoluta aislada para los uploads
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Configuración personalizada de CKEditor 5
+customColorPalette = [
+    {'color': 'hsl(4, 90%, 58%)', 'label': 'Rojo'},
+    {'color': 'hsl(340, 82%, 52%)', 'label': 'Rosa'},
+    {'color': 'hsl(291, 64%, 42%)', 'label': 'Púrpura'},
+    {'color': 'hsl(207, 90%, 54%)', 'label': 'Azul'},
+    {'color': 'hsl(122, 39%, 49%)', 'label': 'Verde'},
+    {'color': 'hsl(36, 100%, 50%)', 'label': 'Naranja'},
+]
+
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 
+                    'numberedList', 'blockQuote'],
+    },
+    'editor_enriquecido': {
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', '|',
+            'fontColor', 'fontBackgroundColor', '|',
+            'link', 'bulletedList', 'numberedList', '|',
+            'alignment', 'outdent', 'indent', '|',
+            'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+            'horizontalLine', 'removeFormat', 'sourceEditing'
+        ],
+        'image': {
+            'toolbar': ['imageTextAlternative', '|',
+                        'imageStyle:inline', 
+                        'imageStyle:wrapText', 
+                        'imageStyle:breakText',
+                        '|',
+                        'imageStyle:alignLeft',
+                        'imageStyle:alignRight',
+                        'imageStyle:alignCenter',
+                        'imageStyle:side',
+                        '|',
+                        'toggleImageCaption',
+                        'imageTextAlternative',
+                        'resizeImage',],
+                'styles': [
+                        'full',
+                        'side',
+                        'alignLeft',
+                        'alignRight',
+                        'alignCenter',
+                        ],
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells']
+        },
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Párrafo', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Encabezado 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Encabezado 2', 'class': 'ck-heading_heading2'},
+                {'model': 'heading3', 'view': 'h3', 'title': 'Encabezado 3', 'class': 'ck-heading_heading3'},
+            ]
+        }
+    }
+}
+
+# Limitar la subida de imágenes únicamente a usuarios del staff/admin
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = 'staff'

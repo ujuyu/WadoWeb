@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView
 from .models import Noticia
 
+
 class NoticiasView(ListView):
     model = Noticia # Contenido del carrousel principal
     template_name = "noticias/componentes/_listaNoticias.html"

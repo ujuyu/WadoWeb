@@ -20,6 +20,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 # 1. Rutas que se mostrarán en la navegación pública
 NAVBAR_URLS = [
     path('', include('core.urls'), name='home'),
@@ -34,6 +35,8 @@ HTMX_URLS = [
 UTILITY_URLS = [
     path('pruebas/', include('pruebas.urls')),
     path("admin/", admin.site.urls),
+    # Endpoint de subida de imágenes y assets de CKEditor 5
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
 ]
 
 # 4. Registro de las URLS de las apps que van a servir algún contenido aunque no se navege a ellas (imprescindible)

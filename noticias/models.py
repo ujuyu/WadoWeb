@@ -2,14 +2,16 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django_ckeditor_5.fields import CKEditor5Field
 
 User = get_user_model()
+
 
 class Noticia(models.Model):
     titulo = models.CharField(max_length=200, verbose_name="Título")
     slug = models.SlugField(max_length=200, unique=True, verbose_name="Slug (URL)")
     resumen = models.TextField(max_length=400, verbose_name="Resumen", help_text="Texto breve que aparecerá en la página principal.")
-    contenido = models.TextField(verbose_name="Contenido completo")
+    contenido = CKEditor5Field(config_name="editor_enriquecido", verbose_name="Contenido completo")
     imagen = models.ImageField(upload_to="noticias/%Y/%m/", verbose_name="Imagen de portada")
     
     fecha_publicacion = models.DateTimeField(default=timezone.now, verbose_name="Fecha de publicación")
@@ -24,6 +26,7 @@ class Noticia(models.Model):
             models.Index(fields=['-fecha_publicacion', 'publicada']),
         ]
 
+            
     def __str__(self):
         return self.titulo
 
