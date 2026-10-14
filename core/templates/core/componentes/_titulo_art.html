@@ -1,0 +1,21 @@
+<header class="my-12 px-4 flex justify-center items-center overflow-hidden">
+  {% if enlace %}
+    <a 
+      class="relative bg-gradient-rainbow inline-flex items-center select-none font-bubble 
+      text-5xl sm:text-7xl md:text-8xl tracking-wider btn btn-ghost h-auto py-2 leading-tight 
+      font-extrabold bg-clip-text text-transparent"
+      aria-label="{{ titulo }}" href="/{{ titulo|slugify }}"
+    >
+      {{ titulo }}
+    </a>
+  {% else %}
+    <h1 
+      class="relative bg-gradient-rainbow inline-flex items-center select-none font-bubble 
+      text-5xl sm:text-7xl md:text-8xl tracking-wider h-auto py-2 leading-tight 
+      font-extrabold bg-clip-text text-transparent"
+      aria-label="{{ titulo }}"
+    >
+      {{ titulo }}
+    </h1>
+  {% endif %}
+</header>

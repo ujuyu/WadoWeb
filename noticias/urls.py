@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import NoticiasView, NoticiaDetailView
+from .views import NoticiasView, NoticiaDetailView, NoticiasPaginaView
 
 app_name = "noticias"
 
 # 1. Rutas que se mostrarán en la navegación pública
 NAVEGACION_URLS = [
     path('noticia/<slug:slug>/', NoticiaDetailView.as_view(), name='noticia_detalle'),
+    path('', NoticiasPaginaView.as_view(), name='noticias')
 ]
 
 # 2. Rutas exclusivas para peticiones interactivas / HTMX (ocultas del menú)

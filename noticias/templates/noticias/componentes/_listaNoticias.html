@@ -5,8 +5,19 @@
     <div class="px-2 w-full max-w-7xl">
         <a href="{{ noticia.get_absolute_url }}" class="card card-horizontal md:card-side bg-base-100 
                 shadow-sm hover:shadow-lg transition-shadow duration-300 group border border-base-300/50 
-                overflow-hidden w-full">
-            
+                overflow-hidden w-full"
+                {% if filtrable == 'si' %}
+                    x-data="{ 
+                        cat: '{{ noticia.categoria|escapejs }}', 
+                        texto: '{{ noticia.titulo|escapejs }} {{ noticia.resumen|escapejs }}' 
+                        }"
+                    x-show="coincide(cat, texto)"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                {% endif %}
+                >
+                
             <figure class="w-full md:w-2/5 lg:w-1/3 shrink-0 overflow-hidden bg-base-200">
                 {% if noticia.imagen %}
                     <img 
@@ -24,7 +35,7 @@
             
             <div class="card-body md:w-3/5 lg:w-2/3 p-6 md:p-8">
                 <div class="flex items-center gap-3 mb-2">
-                    <span class="badge badge-primary badge-soft badge-sm">Actualidad</span>
+                    <span class="badge badge-primary badge-soft badge-sm text-primary-content">{{ noticia.categoria }}</span>
                     <time class="text-sm text-base-content/60 font-medium" datetime="{{ noticia.fecha_publicacion|date:'Y-m-d\TH:i' }}">
                         {{ noticia.fecha_publicacion|date:"d M Y" }}
                     </time>

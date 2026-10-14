@@ -26,7 +26,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Migas de pan (Breadcrumbs) -->
     <nav class="breadcrumbs text-sm mb-6" aria-label="Breadcrumb">
@@ -118,10 +118,10 @@
 
         <!-- Imagen destacada -->
         {% if noticia.imagen %}
-            <figure class="overflow-hidden bg-base-300">
+            <figure class="overflow-hidden bg-base-100 w-full aspect-video m-auto">
                 <img src="{{ noticia.imagen.url }}"
                      alt="{{ noticia.titulo }}"
-                     class="w-full h-full object-cover">
+                     class="h-full object-cover">
             </figure>
         {% endif %}
 

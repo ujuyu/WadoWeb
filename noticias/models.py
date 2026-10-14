@@ -13,6 +13,12 @@ class Noticia(models.Model):
     resumen = models.TextField(max_length=400, verbose_name="Resumen", help_text="Texto breve que aparecerá en la página principal.")
     contenido = CKEditor5Field(config_name="editor_enriquecido", verbose_name="Contenido completo")
     imagen = models.ImageField(upload_to="noticias/%Y/%m/", verbose_name="Imagen de portada")
+    CATEGORIA_CHOICES = [('Actualidad', 'Actualidad'),('Evento', 'Evento')]
+    categoria = models.CharField(
+        max_length=20,
+        choices=CATEGORIA_CHOICES,
+        default= 'Actualidad'
+        )
     
     fecha_publicacion = models.DateTimeField(default=timezone.now, verbose_name="Fecha de publicación")
     publicada = models.BooleanField(default=True, verbose_name="Visible al público")

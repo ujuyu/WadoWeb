@@ -23,7 +23,7 @@ class EventosView(ListView):
             # Eventos futuros ordenados cronológicamente (el más próximo primero)
             return queryset.filter(fecha_celebracion__gte=ahora).order_by("fecha_celebracion")
         # Eventos pasados ordenados del más reciente al más antiguo
-        return queryset.filter(fecha_celebracion__lt=ahora).order_by("-fecha_celebracion")
+        return queryset.filter(fecha_celebracion__lt=ahora).order_by("fecha_celebracion")
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

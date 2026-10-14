@@ -2,6 +2,7 @@
 
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap");
 
 @source not "./tailwindcss";
 @source not "./daisyui{,*}.mjs";
@@ -21,6 +22,7 @@
   );
   --spacing-8xl: 88rem;
   --spacing-9xl: 96rem; 
+  --font-bubble: "Rubik Bubbles", cursive;
 }
 
 @layer utilities {
