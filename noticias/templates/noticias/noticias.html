@@ -23,39 +23,23 @@
   <div class="w-full max-w-5xl bg-base-100/90 backdrop-blur-md p-4 sm:p-6 rounded-2xl shadow-sm border border-base-300 flex flex-col md:flex-row gap-4 justify-between items-center transition-all duration-200">
     <!-- Filtro por categorías (Componente DaisyUI filter) -->
     <div class="flex flex-wrap gap-1 justify-center md:justify-start" role="group" aria-label="Filtrar por categoría">
+        <button 
+          type="button"
+          class="btn btn-sm"
+          :class="categoria === 'todas' ? 'btn-primary' : 'btn-ghost'"
+          @click="categoria = 'todas'"
+        >
+          Todas
+      </button>
       {% for categoria in categorias %}
         <button
           type="button"
           class="btn btn-sm"
-          :class="categoria === 'todas' ? 'btn-primary' : 'btn-ghost'"
-          @click="categoria = {{categoria}}">
-          {{categoria}}
+          :class="categoria === '{{categoria}}' ? 'btn-primary' : 'btn-ghost'"
+          @click="categoria = '{{categoria}}'">
+            {{categoria}}
         </button>
       {% endfor %}
-      <button 
-        type="button"
-        class="btn btn-sm"
-        :class="categoria === 'todas' ? 'btn-primary' : 'btn-ghost'"
-        @click="categoria = 'todas'"
-      >
-        Todas
-      </button>
-      <button 
-        type="button"
-        class="btn btn-sm"
-        :class="categoria === 'cultura' ? 'btn-primary' : 'btn-ghost'"
-        @click="categoria = 'culturas'"
-      >
-        Culturas
-      </button>
-      <button 
-        type="button"
-        class="btn btn-sm"
-        :class="categoria === 'actualidad' ? 'btn-primary' : 'btn-ghost'"
-        @click="categoria = 'actualidad'"
-      >
-        Actualidad
-      </button>
     </div>
 
     <!-- Buscador de texto reactivo con DaisyUI input -->
