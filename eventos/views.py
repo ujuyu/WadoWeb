@@ -31,12 +31,13 @@ class EventosView(ListView):
         context = super().get_context_data(**kwargs)
         # Se pone a disposición del template el valor previamente validado
         context["tipo_actual"] = self.tipo_actual
+        context["filtrable"] = self.filtrable
         return context
     
 class EventoDetailView(DetailView):
     model = Evento
-    template_name = "noticias/detalleNoticia.html"
-    context_object_name = "noticia"
+    template_name = "eventos/detalleEvento.html"
+    context_object_name = "evento"
 
 class EventosPaginaView(ListView):
     model = Evento 

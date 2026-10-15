@@ -2,8 +2,8 @@
   <div class="px-2"
         {% if filtrable == 'si' %}
           x-data="{ 
-              cat: '{{ noticia.categoria|escapejs }}', 
-              texto: '{{ noticia.titulo|escapejs }} {{ noticia.resumen|escapejs }}' 
+              cat: '{{ evento.categoria|escapejs }}', 
+              texto: '{{ evento.titulo|escapejs }} {{ evento.resumen|escapejs }}' 
               }"
           x-show="coincide(cat, texto)"
           x-transition:enter="transition ease-out duration-200"

@@ -10,10 +10,9 @@
                 {% include 'core/componentes/_titulo_art.html' with titulo="Eventos" enlace=False %}
 
                 {# Introducir la lista de noticias con el filtro incorporado #}
-                {% url 'noticias:htmx_ultimos_eventos' as base_url %}
-                {% include 'componentes/_listadoFiltrable.html' with categorias=categorias urlLista=base_url|add:'?numero=10&filtrable=si' %}
-
-            </div>
+                {% url 'eventos:htmx_ultimos_eventos' as base_url %}
+                {% include 'componentes/_listadoFiltrable.html' with categorias=categorias organizacion="w-full flex flex-row flex-wrap gap-4 justify-around items-center" urlLista=base_url|add:'?numero=10&filtrable=si' %}
+            </div> 
             {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-green-500" stroke_2="stroke-blue-500" stroke_3="stroke-purple-600"%}
         </div>
     </section>

@@ -11,7 +11,7 @@
 
                 {# Introducir la lista de noticias con el filtro incorporado #}
                 {% url 'noticias:htmx_ultimas_noticias' as base_url %}
-                {% include 'componentes/_listadoFIltrable.html' with categorias=categorias urlLista=base_url|add:'?numero=10&filtrable=si' %}
+                {% include 'componentes/_listadoFiltrable.html' with categorias=categorias organizacion="w-full flex flex-col items-center gap-8 px-4 sm:px-6" urlLista=base_url|add:'?numero=10&filtrable=si' %}
 
             </div>
             {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-green-500" stroke_2="stroke-blue-500" stroke_3="stroke-purple-600"%}
