@@ -11,7 +11,9 @@ class EventosView(ListView):
     def setup(self, request, *args, **kwargs): # para poder pedir eventos ?pasados o ?futuros
         super().setup(request, *args, **kwargs)
         tipo = request.GET.get("tipo", self.kwargs.get("tipo", "futuros"))
+        filtrable = request.GET.get("filtrable", self.kwargs.get("filtrable", "no"))
         self.tipo_actual = tipo if tipo in self.TIPOS_PERMITIDOS else "futuros"
+        self.filtrable = filtrable if filtrable in ('si', 'no') else 'no'
 
     def get_queryset(self):
         # Buena práctica: Filtrar solo elementos activos y optimizar la consulta
@@ -35,3 +37,22 @@ class EventoDetailView(DetailView):
     model = Evento
     template_name = "noticias/detalleNoticia.html"
     context_object_name = "noticia"
+
+class EventosPaginaView(ListView):
+    model = Evento 
+    template_name = "eventos/eventos.html"
+    context_object_name = "evento"  # Variable limpia para el template
+
+    def get_queryset(self):
+        consultaBaseVista = super().get_queryset() # para respetar los posibles filtros de la clase padre en lugar de hacer Evento.objects.filter...
+        return consultaBaseVista.filter(publicado=True)
+
+    def get_context_data(self, **kwargs):
+        # 1. Obtenemos el contexto base (incluye 'object' y el nombre del modelo en minúsculas)
+        context = super().get_context_data(**kwargs)
+        # 2. Resolver la clase del modelo de forma robusta
+        model_cls = self.model if self.model is not None else self.get_queryset().model
+        # 3. Inyectar la variable de clase del modelo al contexto
+        categorias = [tuplaCategorias[0] for tuplaCategorias in getattr(model_cls, "CATEGORIA_CHOICES")]
+        context["categorias"] = categorias
+        return context

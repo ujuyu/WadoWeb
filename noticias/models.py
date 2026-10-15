@@ -31,8 +31,7 @@ class Noticia(models.Model):
         indexes = [
             models.Index(fields=['-fecha_publicacion', 'publicada']),
         ]
-
-            
+    
     def __str__(self):
         return self.titulo
 

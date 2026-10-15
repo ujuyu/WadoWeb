@@ -1,0 +1,86 @@
+<!-- Hay que pasarle: categorias, urlLista -->
+
+<div
+        x-data="{ 
+            buscar: '', 
+            categoria: 'todas',
+            coincide(itemCat, itemTexto) {
+            const matchCat = this.categoria === 'todas' || itemCat.toLowerCase() === this.categoria.toLowerCase();
+            const matchText = this.buscar === '' || itemTexto.toLowerCase().includes(this.buscar.toLowerCase());
+            return matchCat && matchText;
+            }
+        }" class="w-full flex flex-col items-center gap-8 px-4 sm:px-6">
+
+    <!-- Barra de control y filtros -->
+    <div class="w-full max-w-5xl bg-base-100/90 backdrop-blur-md p-4 sm:p-6 rounded-2xl shadow-sm border border-base-300 flex flex-col md:flex-row gap-4 justify-between items-center transition-all duration-200">
+    <!-- Filtro por categorías (Componente DaisyUI filter) -->
+    <div class="flex flex-wrap gap-1 justify-center md:justify-start" role="group" aria-label="Filtrar por categoría">
+        <button 
+            type="button"
+            class="btn btn-sm"
+            :class="categoria === 'todas' ? 'btn-primary' : 'btn-ghost'"
+            @click="categoria = 'todas'"
+        >
+            Todas
+        </button>
+        {% for categoria in categorias %}
+        <button
+            type="button"
+            class="btn btn-sm"
+            :class="categoria === '{{categoria}}' ? 'btn-primary' : 'btn-ghost'"
+            @click="categoria = '{{categoria}}'">
+            {{categoria}}
+        </button>
+        {% endfor %}
+    </div>
+
+    <!-- Buscador de texto reactivo con DaisyUI input y halo arcoíris -->
+    <div class="relative w-full md:w-72 group">
+        <!-- Halo difuso (glow exterior) -->
+        <span 
+        class="pointer-events-none absolute -inset-0.5 rounded-full bg-gradient-rainbow opacity-0 blur-xs transition-opacity duration-300 motion-reduce:transition-none group-focus-within:opacity-100" 
+        aria-hidden="true"
+        ></span>
+
+        <!-- Halo nítido (borde perimetral) -->
+        <span 
+        class="pointer-events-none absolute -inset-px rounded-full bg-gradient-rainbow opacity-0 transition-opacity duration-200 motion-reduce:transition-none group-focus-within:opacity-100" 
+        aria-hidden="true"
+        ></span>
+
+        <!-- Contenedor del Input DaisyUI -->
+        <label class="input input-bordered input-sm sm:input-md relative flex items-center gap-2 rounded-full bg-base-200/50 focus-within:bg-base-100 focus-within:border-transparent focus-within:outline-none transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4 opacity-60">
+            <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+        </svg>
+        <input 
+            type="search" 
+            class="grow bg-transparent focus:outline-none text-sm" 
+            placeholder="Buscar noticias..." 
+            x-model.debounce.150ms="buscar"
+            aria-label="Buscar noticias por título o descripción"
+        />
+        <button 
+            type="button" 
+            x-show="buscar.length > 0" 
+            x-on:click="buscar = ''" 
+            class="btn btn-ghost btn-circle btn-xs opacity-60 hover:opacity-100"
+            aria-label="Limpiar búsqueda"
+        >
+            ✕
+        </button>
+        </label>
+    </div>
+    </div>
+    <!-- Fin barra de control y filtros -->
+    <div id="noticias-container" 
+        class="my-8 flex flex-col gap-4 w-full items-center"
+        hx-get="{{urlLista}}"
+        hx-trigger="revealed"
+        hx-swap="innerHTML">
+        <div class="flex flex-col gap-4 w-full">
+            <div class="skeleton h-32 w-full"></div><div class="skeleton h-32 w-full"></div><div class="skeleton h-32 w-full"></div>
+            <div class="skeleton h-32 w-full"></div><div class="skeleton h-32 w-full"></div><div class="skeleton h-32 w-full"></div>
+        </div>
+    </div>
+</div>

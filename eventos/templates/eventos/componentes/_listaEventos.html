@@ -1,5 +1,15 @@
 {% for evento in eventos %}
-  <div class="px-2"">
+  <div class="px-2"
+        {% if filtrable == 'si' %}
+          x-data="{ 
+              cat: '{{ noticia.categoria|escapejs }}', 
+              texto: '{{ noticia.titulo|escapejs }} {{ noticia.resumen|escapejs }}' 
+              }"
+          x-show="coincide(cat, texto)"
+          x-transition:enter="transition ease-out duration-200"
+          x-transition:enter-start="opacity-0 scale-95"
+          x-transition:enter-end="opacity-100 scale-100"
+      {% endif %}>
     <article class="m-8 group relative max-w-sm rounded-box transition-all duration-300">
       <div data-theme="light">
         <!-- Imagen del cartel (Fondo interactivo) -->

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <section class="relative w-full overflow-hidden">
+        <div class="h-2 w-full bg-gradient-rainbow"></div>
+        <div class="w-full grid grid-cols-1 xl:grid-cols-[1fr_minmax(0,80rem)_1fr] items-stretch">
+            {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-red-500" stroke_2="stroke-orange-500" stroke_3="stroke-yellow-400"%}
+            <div>
+                {% include 'core/componentes/_titulo_art.html' with titulo="Eventos" enlace=False %}
+
+                {# Introducir la lista de noticias con el filtro incorporado #}
+                {% url 'noticias:htmx_ultimos_eventos' as base_url %}
+                {% include 'componentes/_listadoFiltrable.html' with categorias=categorias urlLista=base_url|add:'?numero=10&filtrable=si' %}
+
+            </div>
+            {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-green-500" stroke_2="stroke-blue-500" stroke_3="stroke-purple-600"%}
+        </div>
+    </section>
+{% endblock %}

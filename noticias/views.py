@@ -18,11 +18,7 @@ class NoticiasView(ListView):
             self.numero_noticias = limite if 0 < limite <= 10 else 3
         except (ValueError, TypeError):
             self.numero_noticias = 3
-
-        if filtrable in ("si", "no"):
-            self.filtrable = filtrable
-        else:
-            self.filtrable = "no"
+        self.filtrable = filtrable if filtrable in ('si', 'no') else 'no'
 
     def get_queryset(self):
         # Mantiene el queryset base y aplica filtros/ordenación

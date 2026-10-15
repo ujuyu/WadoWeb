@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Evento(models.Model):
+    CATEGORIA_CHOICES = [('Taller', 'Taller'),('Jornadas', 'Jornadas'),('Charla', 'Charla')]
     titulo = models.CharField(max_length=200, verbose_name="Título")
     tipo = models.CharField(max_length=20, verbose_name="Tipo", help_text="Jornadas, taller, curso")
     slug = models.SlugField(max_length=200, unique=True, verbose_name="Slug (URL)")
@@ -13,6 +14,11 @@ class Evento(models.Model):
     contenido = models.TextField(verbose_name="Contenido completo")
     imagen = models.ImageField(upload_to="eventos/%Y/%m/", verbose_name="Imagen de portada")
     plazas = models.IntegerField(verbose_name="Plazas")
+    categoria = models.CharField(
+        max_length=20,
+        choices=CATEGORIA_CHOICES,
+        default= 'Jornadas'
+        )
     
     fecha_celebracion = models.DateTimeField(default=timezone.now, verbose_name="Fecha de celebración")
     publicado = models.BooleanField(default=True, verbose_name="Visible al público")

@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import EventosView, EventoDetailView
+from .views import EventosView, EventoDetailView, EventosPaginaView
 
 app_name = "eventos"
 
 # 1. Rutas que se mostrarán en la navegación pública
 NAVEGACION_URLS = [
     path('eventos/<slug:slug>/', EventoDetailView.as_view(), name='evento_detalle'),
+    path('', EventosPaginaView.as_view(), name='eventos')
 ]
 
 # 2. Rutas exclusivas para peticiones interactivas / HTMX (ocultas del menú)
