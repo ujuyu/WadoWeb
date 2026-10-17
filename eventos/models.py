@@ -6,9 +6,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Evento(models.Model):
-    CATEGORIA_CHOICES = [('Taller', 'Taller'),('Jornadas', 'Jornadas'),('Charla', 'Charla')]
+    CATEGORIA_CHOICES = [('Taller', 'Taller'),('Jornadas', 'Jornadas'),('Charla', 'Charla'),('Curso', 'Curso')]
     titulo = models.CharField(max_length=200, verbose_name="Título")
-    tipo = models.CharField(max_length=20, verbose_name="Tipo", help_text="Jornadas, taller, curso")
     slug = models.SlugField(max_length=200, unique=True, verbose_name="Slug (URL)")
     resumen = models.TextField(max_length=400, verbose_name="Resumen", help_text="Texto breve que aparecerá en la página principal.")
     contenido = models.TextField(verbose_name="Contenido completo")

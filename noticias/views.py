@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from .models import Noticia
 
@@ -6,7 +7,6 @@ class NoticiasView(ListView):
     model = Noticia
     template_name = "noticias/componentes/_listaNoticias.html"
     context_object_name = "noticias"
-
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         # Se obtiene el parámetro asegurando tipo string o fallback seguro
@@ -19,7 +19,6 @@ class NoticiasView(ListView):
         except (ValueError, TypeError):
             self.numero_noticias = 3
         self.filtrable = filtrable if filtrable in ('si', 'no') else 'no'
-
     def get_queryset(self):
         # Mantiene el queryset base y aplica filtros/ordenación
         qs = super().get_queryset()
@@ -38,6 +37,13 @@ class NoticiaDetailView(DetailView):
     model = Noticia
     template_name = "noticias/detalleNoticia.html"
     context_object_name = "noticia"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["breadcrumbs"] = [
+            {"label": "Noticias", "url": reverse("noticias:noticias")},
+            {"label": self.object.titulo, "url": None},            
+        ]
+        return context
 
 class NoticiasPaginaView(ListView):
     model = Noticia # Contenido del carrousel principal
@@ -57,5 +63,8 @@ class NoticiasPaginaView(ListView):
         # 3. Inyectar la variable de clase del modelo al contexto
         categorias = [tuplaCategorias[0] for tuplaCategorias in getattr(model_cls, "CATEGORIA_CHOICES")]
         context["categorias"] = categorias
+        context["breadcrumbs"] = [
+            {"label": "Noticias", "url": None}          
+        ]
         return context
 

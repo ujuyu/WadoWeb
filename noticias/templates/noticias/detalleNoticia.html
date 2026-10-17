@@ -29,21 +29,8 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Migas de pan (Breadcrumbs) -->
-    <nav class="breadcrumbs text-sm mb-6" aria-label="Breadcrumb">
-        <ul>
-            <li>
-                <a href="/" class="link link-hover text-base-content/70">Inicio</a>
-            </li>
-            <li>
-                <a href="{% url 'noticias:htmx_ultimas_noticias' %}" class="link link-hover text-base-content/70">Noticias</a>
-            </li>
-            <li class="font-medium text-base-content truncate max-w-xs sm:max-w-md">
-                {{ noticia.titulo }}
-            </li>
-        </ul>
-    </nav>
-    <div class="breadcrumbs text-sm">
-</div>
+    {% include 'componentes/_breadcrumbs.html' %}
+
 
     <!-- Artículo Principal -->
     <article class="card bg-base-100 card-border border-base-300 shadow-sm overflow-hidden">

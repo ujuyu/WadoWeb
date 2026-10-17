@@ -11,7 +11,7 @@
           x-transition:enter-end="opacity-100 scale-100"
       {% endif %}>
     <article class="m-8 group relative max-w-sm rounded-box transition-all duration-300">
-      <div data-theme="light">
+      <div>
         <!-- Imagen del cartel (Fondo interactivo) -->
         <figure class="size-full overflow-hidden rounded-box shadow-md transition-shadow duration-300 group-hover:shadow-2xl">
           <img src="{{ evento.imagen.url }}"
@@ -23,7 +23,7 @@
         <!-- Cuadro superior izquierdo: Título y metadatos (Sobresaliente) -->
         <header class="bg-base-100/80 absolute -top-8 -left-8 z-10 max-w-[85%] rounded-box border border-base-300 p-4 shadow-xl transition-transform duration-300 group-hover:-translate-y-1">
           <div class="flex items-center gap-2 mb-1.5">
-            <span class="badge badge-primary badge-sm font-semibold">{{ evento.tipo }}</span>
+            <span class="badge badge-secondary badge-sm font-bold text-secondary-content">{{ evento.categoria }}</span>
             <time datetime="{{ evento.fecha_celebracion|date:'Y-m-d' }}" class="text-xs text-base-content/70 font-medium">
               {{ evento.fecha_celebracion|date:'j M' }} · {{ evento.fecha_celebracion|date:"H:i" }}
             </time>

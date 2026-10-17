@@ -1,0 +1,20 @@
+{% if breadcrumbs %}
+<nav class="breadcrumbs text-sm mb-6" aria-label="Migas de pan">
+    <ul>
+        <li>
+            <a href="/" class="link link-hover text-base-content/70">Inicio</a>
+        </li>
+        {% for item in breadcrumbs %}
+            {% if forloop.last %}
+                <li class="font-medium text-base-content truncate max-w-xs sm:max-w-md" aria-current="page">
+                    {{ item.label }}
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ item.url }}" class="link link-hover text-base-content/70">{{ item.label }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}

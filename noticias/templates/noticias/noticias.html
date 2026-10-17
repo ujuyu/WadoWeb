@@ -7,6 +7,9 @@
         <div class="w-full grid grid-cols-1 xl:grid-cols-[1fr_minmax(0,80rem)_1fr] items-stretch">
             {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-red-500" stroke_2="stroke-orange-500" stroke_3="stroke-yellow-400"%}
             <div>
+                <div class="px-4 sm:px-6"> <!-- no me convence tener que ponerlo aquí -->
+                    {% include 'componentes/_breadcrumbs.html' %}
+                </div>
                 {% include 'core/componentes/_titulo_art.html' with titulo="Noticias" enlace=False %}
 
                 {# Introducir la lista de noticias con el filtro incorporado #}

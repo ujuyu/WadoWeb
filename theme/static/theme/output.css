@@ -82,6 +82,7 @@
     to right, 
     #ef4444, #f97316, #facc15, #22c55e, #3b82f6, #9333ea
   );
+    --spacing-8xl: 88rem;
     --spacing-9xl: 96rem;
     --font-bubble: "Rubik Bubbles", cursive;
   }
@@ -887,6 +888,28 @@
           --tw-content: "−";
           content: var(--tw-content);
         }
+      }
+    }
+  }
+  .collapse-content {
+    @layer daisyui.l1.l2.l3 {
+      --overflow-delay: 0s;
+      content-visibility: hidden;
+      overflow: clip;
+      grid-column-start: 1;
+      grid-row-start: 2;
+      min-height: 0;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor: unset;
+      @supports not (content-visibility: hidden) {
+        visibility: hidden;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        transition: overflow 0.2s allow-discrete var(--overflow-delay), content-visibility 0.2s allow-discrete, visibility 0.2s allow-discrete, min-height 0.2s ease-out allow-discrete, padding 0.1s ease-out 20ms, background-color 0.2s ease-out;
+      }
+      details > & {
+        content-visibility: visible;
       }
     }
   }
@@ -2952,9 +2975,6 @@
   .h-full {
     height: 100%;
   }
-  .min-h-64 {
-    min-height: calc(var(--spacing) * 64);
-  }
   .min-h-72 {
     min-height: calc(var(--spacing) * 72);
   }
@@ -2997,6 +3017,9 @@
   .w-full {
     width: 100%;
   }
+  .w-max {
+    width: max-content;
+  }
   .max-w-2xl {
     max-width: var(--container-2xl);
   }
@@ -3008,6 +3031,9 @@
   }
   .max-w-7xl {
     max-width: var(--container-7xl);
+  }
+  .max-w-8xl {
+    max-width: var(--spacing-8xl);
   }
   .max-w-9xl {
     max-width: var(--spacing-9xl);
@@ -3730,11 +3756,11 @@
   .text-primary {
     color: var(--color-primary);
   }
-  .text-primary-content {
-    color: var(--color-primary-content);
-  }
   .text-secondary {
     color: var(--color-secondary);
+  }
+  .text-secondary-content {
+    color: var(--color-secondary-content);
   }
   .text-success {
     color: var(--color-success);
@@ -3945,6 +3971,12 @@
     @layer daisyui.l1.l2 {
       --badge-color: var(--color-primary);
       --badge-fg: var(--color-primary-content);
+    }
+  }
+  .badge-secondary {
+    @layer daisyui.l1.l2 {
+      --badge-color: var(--color-secondary);
+      --badge-fg: var(--color-secondary-content);
     }
   }
   .badge-warning {
@@ -4507,14 +4539,69 @@
       display: inline;
     }
   }
+  .xl\:grid-cols-\[1fr_max-content_1fr\] {
+    @media (width >= 80rem) {
+      grid-template-columns: 1fr max-content 1fr;
+    }
+  }
   .xl\:grid-cols-\[1fr_minmax\(0\,80rem\)_1fr\] {
     @media (width >= 80rem) {
       grid-template-columns: 1fr minmax(0,80rem) 1fr;
     }
   }
+  .xl\:grid-cols-\[1fr_minmax\(0\,88rem\)_1fr\] {
+    @media (width >= 80rem) {
+      grid-template-columns: 1fr minmax(0,88rem) 1fr;
+    }
+  }
+  .xl\:grid-cols-\[minmax\(0\,3rem\)_1fr_minmax\(0\,3rem\)\] {
+    @media (width >= 80rem) {
+      grid-template-columns: minmax(0,3rem) 1fr minmax(0,3rem);
+    }
+  }
+  .xl\:grid-cols-\[minmax\(0\,10rem\)_1fr_minmax\(0\,10rem\)\] {
+    @media (width >= 80rem) {
+      grid-template-columns: minmax(0,10rem) 1fr minmax(0,10rem);
+    }
+  }
+  .xl\:grid-cols-\[minmax\(0\,15rem\)_1fr_minmax\(0\,15rem\)\] {
+    @media (width >= 80rem) {
+      grid-template-columns: minmax(0,15rem) 1fr minmax(0,15rem);
+    }
+  }
+  .xl\:grid-cols-\[minmax\(0\,15rem\)_max-content_minmax\(0\,15rem\)\] {
+    @media (width >= 80rem) {
+      grid-template-columns: minmax(0,15rem) max-content minmax(0,15rem);
+    }
+  }
+  .xl\:grid-cols-\[minmax\(0\,16rem\)_1fr_minmax\(0\,16rem\)\] {
+    @media (width >= 80rem) {
+      grid-template-columns: minmax(0,16rem) 1fr minmax(0,16rem);
+    }
+  }
+  .xl\:grid-cols-\[minmax\(0\,18rem\)_1fr_minmax\(0\,18rem\)\] {
+    @media (width >= 80rem) {
+      grid-template-columns: minmax(0,18rem) 1fr minmax(0,18rem);
+    }
+  }
+  .xl\:grid-cols-\[minmax\(0\,20rem\)_1fr_minmax\(0\,20rem\)\] {
+    @media (width >= 80rem) {
+      grid-template-columns: minmax(0,20rem) 1fr minmax(0,20rem);
+    }
+  }
   .xl\:p-24 {
     @media (width >= 80rem) {
       padding: calc(var(--spacing) * 24);
+    }
+  }
+  .\32 xl\:grid-cols-\[minmax\(0\,15rem\)_1fr_minmax\(0\,15rem\)\] {
+    @media (width >= 96rem) {
+      grid-template-columns: minmax(0,15rem) 1fr minmax(0,15rem);
+    }
+  }
+  .\32 xl\:grid-cols-\[minmax\(0\,15rem\)_max-content_minmax\(0\,15rem\)\] {
+    @media (width >= 96rem) {
+      grid-template-columns: minmax(0,15rem) max-content minmax(0,15rem);
     }
   }
 }
