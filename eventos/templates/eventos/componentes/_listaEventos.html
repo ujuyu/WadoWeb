@@ -78,21 +78,37 @@
         />
               <!-- Botón de cierre en esquina superior derecha -->
       <form method="dialog" class="absolute top-4 right-4 z-30">
-        <button class="btn btn-circle btn-primary md:btn-md text-primary-content 
-                        hover:scale-105 active:scale-95 transition-transform font-bold" 
+        <button class="btn btn-circle btn-primary bg-primary/60 btn-md md:btn-xl text-primary-content 
+                        hover:scale-105 active:scale-95 transition-transform font-extrabold" 
                         aria-label="Cerrar vista completa">
-          ✕
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            viewBox="0 0 24 24" 
+            fill="currentColor" 
+            class="size-6 transition-transform duration-200 hover:scale-110 active:scale-95" 
+            aria-hidden="true"
+          >
+            <path d="M7.7 4.3a2.4 2.4 0 0 0-3.4 3.4L8.6 12l-4.3 4.3a2.4 2.4 0 0 0 3.4 3.4l4.3-4.3 4.3 4.3a2.4 2.4 0 0 0 3.4-3.4L15.4 12l4.3-4.3a2.4 2.4 0 0 0-3.4-3.4L12 8.6 7.7 4.3z" />
+          </svg>
         </button>
       </form>
 
         <!-- Botón 'Visítame' en esquina inferior derecha -->
         <div class="absolute bottom-6 right-6 z-30">
           <a 
-            href="{{ evento.url|default:'#' }}" 
-            class="btn btn-primary btn-xl shadow-lg shadow-primary/30 text-primary-content
-                  hover:scale-105 active:scale-95 transition-transform font-bold"
+            href="{{evento.get_absolute_url|default:'#' }}" 
+            class="btn btn-circle btn-primary bg-primary/60 btn-md md:btn-xl text-primary-content
+                  hover:scale-105 active:scale-95 transition-transform font-extrabold" aria-label="Visítame"
           >
-            Visítame
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24" 
+              fill="currentColor" 
+              class="size-6 transition-transform duration-200 group-hover:translate-x-1" 
+              aria-hidden="true"
+            >
+              <path d="M13.2 4.2a1 1 0 0 1 1.6.7l6.7 6.4a1 1 0 0 1 0 1.4l-6.7 6.4a1 1 0 0 1-1.6-.7V15H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h9.2V4.2z" />
+            </svg>
           </a>
         </div>
 
