@@ -1,9 +1,21 @@
+import os
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+def rutaImagenActividad(instance, filename):
+    """
+    Devuelve la ruta de guardado con la carpeta del evento
+    al que está adscrita: eventos/<slug-del-evento>/fecha/<archivo>
+    """
+    evento = instance.evento
+    carpeta = slugify(evento.slug or evento.titulo) or f"evento-{evento.pk}"
+    return f"eventos/{carpeta}/{filename}"
+
 
 class Evento(models.Model):
     CATEGORIA_CHOICES = [('Taller', 'Taller'),('Jornadas', 'Jornadas'),('Charla', 'Charla'),('Curso', 'Curso')]
@@ -37,4 +49,9 @@ class Evento(models.Model):
     def get_absolute_url(self):
         return reverse('eventos:evento_detalle', kwargs={'slug': self.slug})
 
-
+class Actividad(models.Model):
+    titulo = models.CharField(max_length=200, verbose_name="Título")
+    resumen = models.TextField(max_length=400, verbose_name="Resumen")
+    contenido = models.TextField(verbose_name="Descripción")
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name="actividades")
+    imagen = models.ImageField(upload_to=rutaImagenActividad, verbose_name="Imagen")

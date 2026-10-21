@@ -26,129 +26,136 @@
 {% endblock %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="h-2 w-full bg-gradient-rainbow"></div>
+<div class="w-full grid grid-cols-1
+            xl:grid-cols-[1fr_minmax(0,80rem)_1fr]
+            2xl:grid-cols-[minmax(0,15rem)_1fr_minmax(0,15rem)] 
+            items-stretch">
+    {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-red-500" stroke_2="stroke-orange-500" stroke_3="stroke-yellow-400"%}
+    <div class="">
+        <!-- Migas de pan (Breadcrumbs) -->
+        {% include 'componentes/_breadcrumbs.html' %}
 
-    <!-- Migas de pan (Breadcrumbs) -->
-    {% include 'componentes/_breadcrumbs.html' %}
 
-
-    <!-- Artículo Principal -->
-    <article class="card bg-base-100 card-border border-base-300 shadow-sm overflow-hidden">
-        
-        <!-- Cabecera del artículo -->
-        <header class="p-6 sm:p-8 pb-4">
-            <div class="flex flex-wrap items-center gap-2 mb-4">
-                <span class="badge badge-primary badge-soft text-xs font-semibold">
-                    Actualidad LGTBI+
-                </span>
-                {% if not noticia.publicada %}
-                    <span class="badge badge-warning text-xs font-semibold">
-                        Borrador (No visible al público)
+        <!-- Artículo Principal -->
+        <article class="card bg-base-100 card-border border-base-300 shadow-sm overflow-hidden max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
+            
+            <!-- Cabecera del artículo -->
+            <header class="p-6 sm:p-8 pb-4">
+                <div class="flex flex-wrap items-center gap-2 mb-4">
+                    <span class="badge badge-primary badge-soft text-xs font-semibold">
+                        Actualidad LGTBI+
                     </span>
-                {% endif %}
-            </div>
+                    {% if not noticia.publicada %}
+                        <span class="badge badge-warning text-xs font-semibold">
+                            Borrador (No visible al público)
+                        </span>
+                    {% endif %}
+                </div>
 
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-base-content tracking-tight leading-tight mb-4">
-                {{ noticia.titulo }}
-            </h1>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-base-content tracking-tight leading-tight mb-4">
+                    {{ noticia.titulo }}
+                </h1>
 
-            <p class="text-lg sm:text-xl text-base-content/80 font-normal leading-relaxed border-l-4 border-primary pl-4 my-6 bg-base-200/40 py-2 rounded-r-box">
-                {{ noticia.resumen }}
-            </p>
+                <p class="text-lg sm:text-xl text-base-content/80 font-normal leading-relaxed border-l-4 border-primary pl-4 my-6 bg-base-200/40 py-2 rounded-r-box">
+                    {{ noticia.resumen }}
+                </p>
 
-            <!-- Metadatos de Autor y Fecha -->
-            <div class="flex items-center justify-between border-t border-base-200 pt-4 mt-6">
-                <div class="flex items-center gap-3">
-                    <div class="avatar avatar-placeholder">
-                        <div class="bg-neutral text-neutral-content w-10 h-10 rounded-full font-bold text-sm">
-                            {% if noticia.autor %}
-                                {{ noticia.autor.first_name|default:noticia.autor.username|slice:":1"|upper }}
-                            {% else %}
-                                W
-                            {% endif %}
+                <!-- Metadatos de Autor y Fecha -->
+                <div class="flex items-center justify-between border-t border-base-200 pt-4 mt-6">
+                    <div class="flex items-center gap-3">
+                        <div class="avatar avatar-placeholder">
+                            <div class="bg-neutral text-neutral-content w-10 h-10 rounded-full font-bold text-sm">
+                                {% if noticia.autor %}
+                                    {{ noticia.autor.first_name|default:noticia.autor.username|slice:":1"|upper }}
+                                {% else %}
+                                    W
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="text-sm">
+                            <p class="font-semibold text-base-content">
+                                {% if noticia.autor %}
+                                    {{ noticia.autor.get_full_name|default:noticia.autor.username }}
+                                {% else %}
+                                    Asociación WADO LGTBI+
+                                {% endif %}
+                            </p>
+                            <time datetime="{{ noticia.fecha_publicacion|date:'c' }}" class="text-xs text-base-content/60">
+                                {{ noticia.fecha_publicacion|date:"d \d\e F \d\e Y" }}
+                            </time>
                         </div>
                     </div>
-                    <div class="text-sm">
-                        <p class="font-semibold text-base-content">
-                            {% if noticia.autor %}
-                                {{ noticia.autor.get_full_name|default:noticia.autor.username }}
-                            {% else %}
-                                Asociación WADO LGTBI+
-                            {% endif %}
-                        </p>
-                        <time datetime="{{ noticia.fecha_publicacion|date:'c' }}" class="text-xs text-base-content/60">
-                            {{ noticia.fecha_publicacion|date:"d \d\e F \d\e Y" }}
-                        </time>
+
+                    <!-- Botón de compartir nativo o copiar enlace -->
+                    <div class="flex items-center gap-1" x-data="{ copied: false }">
+                        <button type="button"
+                                class="btn btn-ghost btn-sm btn-circle"
+                                @click="navigator.clipboard.writeText(window.location.href); copied = true; setTimeout(() => copied = false, 2000)"
+                                aria-label="Copiar enlace">
+                            <span x-show="!copied">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                            </span>
+                            <span x-show="copied" class="text-success" style="display: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                        </button>
                     </div>
                 </div>
+            </header>
 
-                <!-- Botón de compartir nativo o copiar enlace -->
-                <div class="flex items-center gap-1" x-data="{ copied: false }">
-                    <button type="button"
-                            class="btn btn-ghost btn-sm btn-circle"
-                            @click="navigator.clipboard.writeText(window.location.href); copied = true; setTimeout(() => copied = false, 2000)"
-                            aria-label="Copiar enlace">
-                        <span x-show="!copied">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                        </span>
-                        <span x-show="copied" class="text-success" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                        </span>
-                    </button>
+            <!-- Imagen destacada -->
+            {% if noticia.imagen %}
+                <figure class="overflow-hidden bg-base-100 w-full aspect-video m-auto">
+                    <img src="{{ noticia.imagen.url }}"
+                        alt="{{ noticia.titulo }}"
+                        class="h-full object-cover">
+                </figure>
+            {% endif %}
+
+            <!-- Cuerpo del artículo (CKEditor 5) -->
+            <div class="card-body p-6 sm:p-8 sm:py-10">
+                <div class="prose max-w-none">
+                    {{ noticia.contenido|safe }}
                 </div>
-            </div>
-        </header>
 
-        <!-- Imagen destacada -->
-        {% if noticia.imagen %}
-            <figure class="overflow-hidden bg-base-100 w-full aspect-video m-auto">
-                <img src="{{ noticia.imagen.url }}"
-                     alt="{{ noticia.titulo }}"
-                     class="h-full object-cover">
-            </figure>
-        {% endif %}
+                <div class="divider my-8"></div>
 
-        <!-- Cuerpo del artículo (CKEditor 5) -->
-        <div class="card-body p-6 sm:p-8 sm:py-10">
-            <div class="prose max-w-none">
-                {{ noticia.contenido|safe }}
-            </div>
-
-            <div class="divider my-8"></div>
-
-            <!-- Navegación y pie del artículo -->
-            <footer class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <a href="/" class="btn btn-outline btn-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="size-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    Volver a Inicio
-                </a>
-
-                <div class="flex items-center gap-2">
-                    <span class="text-xs text-base-content/60 font-medium">Compartir:</span>
-                    <a href="https://twitter.com/intent/tweet?text={{ noticia.titulo|urlencode }}&url={{ request.build_absolute_uri|urlencode }}"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="btn btn-ghost btn-circle btn-sm"
-                       aria-label="Compartir en X / Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                <!-- Navegación y pie del artículo -->
+                <footer class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <a href="/" class="btn btn-outline btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Volver a Inicio
                     </a>
-                    <a href="https://api.whatsapp.com/send?text={{ noticia.titulo|urlencode }}%20{{ request.build_absolute_uri|urlencode }}"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="btn btn-ghost btn-circle btn-sm"
-                       aria-label="Compartir en WhatsApp">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    </a>
-                </div>
-            </footer>
-        </div>
 
-    </article>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-base-content/60 font-medium">Compartir:</span>
+                        <a href="https://twitter.com/intent/tweet?text={{ noticia.titulo|urlencode }}&url={{ request.build_absolute_uri|urlencode }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-ghost btn-circle btn-sm"
+                        aria-label="Compartir en X / Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                        </a>
+                        <a href="https://api.whatsapp.com/send?text={{ noticia.titulo|urlencode }}%20{{ request.build_absolute_uri|urlencode }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-ghost btn-circle btn-sm"
+                        aria-label="Compartir en WhatsApp">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        </a>
+                    </div>
+                </footer>
+            </div>
+
+        </article>
+    </div>
+    {% include 'core/componentes/_bandas_laterales.html' with stroke_1="stroke-green-500" stroke_2="stroke-blue-500" stroke_3="stroke-purple-600"%}
 </div>
 {% endblock %}

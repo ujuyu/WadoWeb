@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from .models import Evento
@@ -39,6 +40,13 @@ class EventoDetailView(DetailView):
     template_name = "eventos/detalleEvento.html"
     context_object_name = "evento"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["breadcrumbs"] = [
+            {"label": "Eventos", "url": reverse("eventos:eventos")},
+            {"label": self.object.titulo, "url": None},            
+        ]
+
 class EventosPaginaView(ListView):
     model = Evento 
     template_name = "eventos/eventos.html"
@@ -56,4 +64,7 @@ class EventosPaginaView(ListView):
         # 3. Inyectar la variable de clase del modelo al contexto
         categorias = [tuplaCategorias[0] for tuplaCategorias in getattr(model_cls, "CATEGORIA_CHOICES")]
         context["categorias"] = categorias
+        context["breadcrumbs"] = [
+            {"label": "Eventos", "url": None}            
+        ]
         return context

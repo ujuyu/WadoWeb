@@ -12,29 +12,40 @@
       {% endif %}>
     <article class="m-8 group relative max-w-sm rounded-box transition-all duration-300">
       <div>
-        <!-- Imagen del cartel (Fondo interactivo) -->
-        <figure class="size-full overflow-hidden rounded-box shadow-md transition-shadow duration-300 group-hover:shadow-2xl">
-          <img src="{{ evento.imagen.url }}"
-            alt="Cartel promocional del evento" 
-            class="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            loading="lazy"
-          />
-        </figure>
+        <!-- Botón interactivo para ampliar imagen -->
+        <button 
+          type="button" 
+          onclick="document.getElementById('modal_evento_{{ forloop.counter }}').showModal()"
+          class="size-full overflow-hidden rounded-box shadow-md transition-shadow duration-300 group-hover:shadow-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-zoom-in block text-left"
+          aria-haspopup="dialog"
+          aria-label="Ampliar cartel de {{ evento.titulo }}"
+        >
+          <figure class="size-full">
+            <img 
+              src="{{ evento.imagen.url }}"
+              alt="Cartel promocional de {{ evento.titulo }}" 
+              class="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              loading="lazy"
+            />
+          </figure>
+        </button>
+
         <!-- Cuadro superior izquierdo: Título y metadatos (Sobresaliente) -->
-        <header class="bg-base-100/80 absolute -top-8 -left-8 z-10 max-w-[85%] rounded-box border border-base-300 p-4 shadow-xl transition-transform duration-300 group-hover:-translate-y-1">
-          <div class="flex items-center gap-2 mb-1.5">
+        <header class="bg-base-100/80 absolute -top-8 -left-8 z-10 max-w-[85%] rounded-box border border-base-300 p-4 shadow-xl backdrop-blur-md transition-transform duration-300 group-hover:-translate-y-1 pointer-events-none">
+          <div class="flex items-center gap-2 mb-1.5 pointer-events-auto">
             <span class="badge badge-secondary badge-sm font-bold text-secondary-content">{{ evento.categoria }}</span>
             <time datetime="{{ evento.fecha_celebracion|date:'Y-m-d' }}" class="text-xs text-base-content/70 font-medium">
               {{ evento.fecha_celebracion|date:'j M' }} · {{ evento.fecha_celebracion|date:"H:i" }}
             </time>
           </div>
-          <h3 id="event-title-1" class="text-xl font-bold text-base-content leading-tight group-hover:text-primary transition-colors">
+          <h3 id="event-title-{{ forloop.counter }}" class="text-xl font-bold text-base-content leading-tight group-hover:text-primary transition-colors pointer-events-auto">
               {{ evento.titulo }}
           </h3>
         </header>
+
         <!-- Cuadro inferior derecho: Resumen y acción (Sobresaliente) -->
-        <footer class="absolute -bottom-8 -right-8 z-10 max-w-[85%] rounded-box border border-base-300 bg-base-100/80 p-4 shadow-xl transition-transform duration-300 group-hover:translate-y-1">
-          <p class="text-s font-medium text-base-content leading-relaxed mb-3 text-justify">
+        <footer class="absolute -bottom-8 -right-8 z-10 max-w-[85%] rounded-box border border-base-300 bg-base-100/80 p-4 shadow-xl backdrop-blur-md transition-transform duration-300 group-hover:translate-y-1">
+          <p class="text-sm font-medium text-base-content leading-relaxed mb-3 text-justify">
             {{ evento.resumen }}
           </p>
           <div class="flex items-center justify-between gap-3">
@@ -42,9 +53,9 @@
               {% if evento.plazas %}(plazas: {{ evento.plazas }}){% endif %}
             </span>
             <a 
-              href="#" 
+              href="{{evento.get_absolute_url}}" 
               class="btn btn-primary btn-sm rounded-field hover:scale-105 active:scale-95 transition-transform"
-              aria-labelledby="event-title-1"
+              aria-labelledby="event-title-{{ forloop.counter }}"
             >
               Inscribirme
             </a>
@@ -52,7 +63,42 @@
         </footer>
       </div>
     </article>
+
+    <!-- Modal nativo DaisyUI / HTML5 para visualización a pantalla completa -->
+    <dialog id="modal_evento_{{ forloop.counter }}" class="modal backdrop-blur-sm">
+
+
+
+      <!-- Contenedor central de la imagen con restricción dimensional para evitar recortes -->
+      <div class="relative flex items-center justify-center">
+        <img 
+          src="{{ evento.imagen.url }}" 
+          alt="Cartel promocional completo de {{ evento.titulo }}" 
+          class="max-h-[90vh] max-w-[92vw] w-auto h-auto object-contain rounded-box shadow-2xl transition-transform duration-300"
+        />
+              <!-- Botón de cierre en esquina superior derecha -->
+      <form method="dialog" class="absolute top-4 right-4 z-30">
+        <button class="btn btn-circle btn-primary md:btn-md text-primary-content 
+                        hover:scale-105 active:scale-95 transition-transform font-bold" 
+                        aria-label="Cerrar vista completa">
+          ✕
+        </button>
+      </form>
+
+        <!-- Botón 'Visítame' en esquina inferior derecha -->
+        <div class="absolute bottom-6 right-6 z-30">
+          <a 
+            href="{{ evento.url|default:'#' }}" 
+            class="btn btn-primary btn-xl shadow-lg shadow-primary/30 text-primary-content
+                  hover:scale-105 active:scale-95 transition-transform font-bold"
+          >
+            Visítame
+          </a>
+        </div>
+
+      </div>
+    </dialog>
   </div>
 {% empty %}
-    <p>No hay eventos.</p>
+    <p class="text-base-content/60 text-center py-8">No hay eventos disponibles.</p>
 {% endfor %}
