@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import EventosView, EventoDetailView, EventosPaginaView
+from .views import EventosView, EventoDetailView, EventosPaginaView, ActividadesEventoView
 
 app_name = "eventos"
 
@@ -12,6 +12,7 @@ NAVEGACION_URLS = [
 # 2. Rutas exclusivas para peticiones interactivas / HTMX (ocultas del menú)
 HTMX_URLS = [
     path('htmx/ultimos/', EventosView.as_view(), name='htmx_ultimos_eventos'),
+    path('htmx/evento/<slug:slug>/actividades/', ActividadesEventoView.as_view(), name='htmx_actividades_evento'),
 ]
 
 

@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Evento
+from .models import Evento, Actividad
 
 admin.site.register(Evento)
-
-# Register your models here.
+admin.site.register(Actividad)
